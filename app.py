@@ -35,12 +35,12 @@ def get_access_token():
 
 @app.route('/register')
 def register_urls():
-    endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' #
+    endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' # 
     access_token = _access_token() # get the access token from the function _access_token 
     my_endpoint = "c2b/" #This is used to access both C2B confirmation and C2B validation
     headers = { "Authorization": "Bearer %s" % access_token }
     r_data = {
-        "ShortCode": "600383",
+        "ShortCode": "600247",
         "ResponseType": "Completed",
         "ConfirmationURL": my_endpoint + 'con', # This gets the base_url + C2B confirmation from 'c2b/con'
         "ValidationURL": my_endpoint + 'val'  # This gets the base_url + C2B validation from 'c2b/val'
@@ -58,10 +58,10 @@ def test_payment():
 
     data_s = {
         "Amount": 100,
-        "ShortCode": "600383",
+        "ShortCode": "600247",
         "BillRefNumber": "test",
         "CommandID": "CustomerPayBillOnline",
-        "Msisdn": "254708374149"
+        "Msisdn": "254741151005"
     }
 
     res = requests.post(endpoint, json= data_s, headers = headers)
@@ -72,7 +72,7 @@ def make_payment():
     endpoint = 'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest'
     access_token = _access_token()
     headers = { "Authorization": "Bearer %s" % access_token }
-    my_endpoint = base_url + "/b2c/"
+    my_endpoint = "/b2c/"
 
     data = {
         "InitiatorName": "apitest342",
@@ -80,7 +80,7 @@ def make_payment():
         "CommandID": "BusinessPayment",
         "Amount": "200",
         "PartyA": "601342",
-        "PartyB": "254708374149",
+        "PartyB": "254741151005",
         "Remarks": "Pay Salary",
         "QueueTimeOutURL": my_endpoint + "timeout",
         "ResultURL": my_endpoint + "result",
@@ -95,7 +95,7 @@ def init_stk():
     endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
     access_token = _access_token()
     headers = { "Authorization": "Bearer %s" % access_token }
-    my_endpoint = base_url + "/lnmo"
+    my_endpoint = "/lnmo"
     Timestamp = datetime.now()
     times = Timestamp.strftime("%Y%m%d%H%M%S")
     password = "174379" + "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" + times
